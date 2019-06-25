@@ -22,16 +22,20 @@ export function fetchOrders(pageSize, page, key, searchType, sort) {
     .get('/orders?pageSize=15?page=1', {})
     .then(response => { 
         const orders= response;
-        console.log(response.data)
-        return orders
+        // console.log(response.data)
+        return orders;
 
         })
 }
 
 export function fetchOrderById(id) {
   return axios
-    .get(`/courses/${id}`)
-    .then(response => _transform(response.data.data, 0))
+    .get(`/orders/${id}`)
+    .then(response => {
+        const order=response.data;
+        console.log(order)
+        return order;
+    })
     .catch(error => {
       if (error.response) {
         const errorData = error.response;

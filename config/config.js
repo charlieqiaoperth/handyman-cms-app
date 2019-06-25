@@ -34,7 +34,9 @@ export default {
           path: '/orders',
           routes: [
             { path: '/orders/analysis', component: 'Orders/Analysis' },
-            { path: '/orders/management', component: 'Orders/Management' },           
+            { path: '/orders/management', component: 'Orders/Management' },
+            { path: '/orders/management/edit/:id', component: 'Orders/Edit' },
+            { path: '/orders/management/:id', component: 'Orders/OrderView' },            
           ]
         },
         {

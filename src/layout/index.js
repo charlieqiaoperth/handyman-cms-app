@@ -12,7 +12,16 @@ export default class BasicLayout extends Component {
   render() {
     return (
       <Layout>
-        <Sider width={256} style={{ minHeight: '100vh' }}>
+        <Sider width={256} style={{ minHeight: '100vh' }}
+             breakpoint="md"
+             collapsedWidth="0"
+             onBreakpoint={broken => {
+               console.log(broken);
+             }}
+             onCollapse={(collapsed, type) => {
+               console.log(collapsed, type);
+             }}
+        >
           <div style={{ height: '32px', background: 'rgba(255,255,255,.2)', margin: '16px'}}/>
           <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
             <Menu.Item key="1">

@@ -31,15 +31,13 @@ export default class Orders extends React.Component {
         {
           title: 'ID',
           dataIndex: '_id',
-          key: 'id',
-        //   render: text => <a nohref onClick="alert('Hello World');">{text}</a>,
-        // render: record => <Link to= "/${x}"> const x={record} </Link>,
-        render: (text, record) => (
+          key: 'id',  
+          render: (text, record) => (
             <span>    
            
             <Link
                 to={{
-                    pathname: `/courses/${text}`,           
+                    pathname: `/orders/management/${text}`,           
                 }}>{text}
             </Link>          
             </span>      
@@ -50,16 +48,16 @@ export default class Orders extends React.Component {
           dataIndex: 'status',
           key: 'status',
         },
-        {
-          title: 'Grade',
-          dataIndex: 'grade',
-          key: 'grade',
-        }, 
-        {
-            title: 'Comments',
-            dataIndex: 'comments',
-            key: 'comments',
-          },      
+        // {
+        //   title: 'Grade',
+        //   dataIndex: 'grade',
+        //   key: 'grade',
+        // }, 
+        // {
+        //     title: 'Comments',
+        //     dataIndex: 'comments',
+        //     key: 'comments',
+        //   },      
         {
         title: 'Customer',
         dataIndex: 'customer.customerName',
@@ -79,7 +77,7 @@ export default class Orders extends React.Component {
             <span>
                <Link
                 to={{
-                    pathname: `/courses/Edit/${text}`,           
+                    pathname: `/orders/management/edit/${text}`,           
                 }}>Edit
             </Link>
             <Divider type="vertical" />
@@ -92,33 +90,12 @@ export default class Orders extends React.Component {
         alert(e);
         <Link to="/orders/e;"></Link>
     }
-    // orders = (data)=> {
-    //    const x= data.map((e)=>{ 
-    //         e.status,
-    //         e.grade,
-    //         e.comments,
-    //         e._id
-    //      });
-    //     console.log(x);
-    //     return x;
-    // }
+
     render() {
       return (
-        // <div>
-        //   <BlockUi blocking={this.state.isFetching}>
-        //     <div className="row" style={{ marginTop: 15 }}>
-        //         {this.state.courses.map((course, index) => <CourseCard course={course} key={course._id} />)}
-        //     </div>
-        //   </BlockUi>
-        // </div>
-        // <div>
-        //   {this.state.orders.map((order, index) => 
-        //   <div key={index}>{(order.grade)}
-        //   <span>{(order.status)}</span>
-        //   </div>)}
-        // </div>
+   
         <div><Table columns={this.columns} dataSource={this.state.orders} /></div>
-        // <div>{this.orders(this.state.orders)}</div>
+       
       );
     }
   }
