@@ -1,7 +1,8 @@
 // Management.js
 import {fetchOrders} from '../../api/order';
-// import React from 'react';
+
 import { Table, Divider} from 'antd';
+import Link from 'umi/link';
 
 export default class Orders extends React.Component {
     constructor(props) {
@@ -31,7 +32,18 @@ export default class Orders extends React.Component {
           title: 'ID',
           dataIndex: '_id',
           key: 'id',
-        //   render: text => <a href="javascript:;">{text}</a>,
+        //   render: text => <a nohref onClick="alert('Hello World');">{text}</a>,
+        // render: record => <Link to= "/${x}"> const x={record} </Link>,
+        render: (text, record) => (
+            <span>    
+           
+            <Link
+                to={{
+                    pathname: `/courses/${text}`,           
+                }}>{text}
+            </Link>          
+            </span>      
+          ),
         },
         {
           title: 'Status',
@@ -60,17 +72,26 @@ export default class Orders extends React.Component {
           },  
         {
           title: 'Action',
+          dataIndex: '_id',
           key: 'action',
           render: (text, record) => (
+            // onClick={(e) => { this.haha(text); }}
             <span>
-              <a href="javascript:;">edit</a>
-              <Divider type="vertical" />
-              <a href="javascript:;">Delete</a>
-            </span>
+               <Link
+                to={{
+                    pathname: `/courses/Edit/${text}`,           
+                }}>Edit
+            </Link>
+            <Divider type="vertical" />
+            <a href="javascript:;">Delete</a>
+          </span>
           ),
         },
       ];
-
+    haha(e) {
+        alert(e);
+        <Link to="/orders/e;"></Link>
+    }
     // orders = (data)=> {
     //    const x= data.map((e)=>{ 
     //         e.status,

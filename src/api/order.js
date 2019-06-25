@@ -19,7 +19,7 @@ const axios = require('../utils/axios');
 
 export function fetchOrders(pageSize, page, key, searchType, sort) {
   return axios
-    .get('/orders?pageSize=5?page=1', {})
+    .get('/orders?pageSize=15?page=1', {})
     .then(response => { 
         const orders= response;
         console.log(response.data)
