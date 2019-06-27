@@ -46,7 +46,7 @@ export function fetchOrderById(id) {
 }
 
 export function addNewOrder(data) {
-  return axios.post('/order', data);
+  return axios.post('/orders', data);
 }
 
 export function updateOrder(id, data) {
@@ -54,5 +54,5 @@ export function updateOrder(id, data) {
 }
 
 export function deleteOrder(id) {
-  return axios.delete(`/courses/${id}`);
+  return axios.delete(`/orders/${id}`);
 }

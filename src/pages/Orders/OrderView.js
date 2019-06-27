@@ -1,6 +1,7 @@
-import { Card, Steps } from 'antd';
+import { Card, Steps, Row, Col } from 'antd';
 import {fetchOrderById} from '../../api/order';
 const {Step} =Steps;
+import Link from 'umi/link';
 
 export default class Orders extends React.Component {
     constructor(props) {
@@ -39,43 +40,31 @@ export default class Orders extends React.Component {
         <Step title="Finished" />
       </Steps>
        )
+     };
+     handleEdit=()=>{
+      const id = this.props.match.params.id;      
+      this.props.history.push({
+        pathname: `/orders/management/edit/${id}`,
+    });
      }
      render() {
-      return (
-          <div>
-        <Card style={this.style} actions={[<a>EDIT</a>, <a>DELETE</a>]}>
-          <Card.Meta
-            // avatar={<img 
-            // alt=""
-            // style={{ width: '64px', height: '64px', borderRadius: '32px' }}
-            // src="https://gw.alipayobjects.com/zos/rmsportal/WdGqmHpayyMjiEhcKoVE.png"
-            //     />}
-            title={this.stepOrder(this.state.order.status)}            
-            description="2019-06-23"
-            />
-            <div style={{ marginTop: "15px",display:'flex' }}>
-                <div style={{ width:"50%",margin: "15px"}}>
-                   <ul>
-                    <li>Customer<span>{this.state.order.status}</span></li>
-                    <li>Contact<span>
-                    <ul>
-                    <li>hah</li>
-                    </ul>
-                    </span></li>
-                    <li>Job Location</li>
-                    </ul>
-                </div>
-                <div style={{ width:"50%",margin: "15px"}}>
-                <ul>
-                    <li>Business<span>{this.state.order.status}</span></li>
-                    <li>Contact</li>
-                    <li>Grade</li>
-                    <li>Comments</li>
-                    </ul>
-                </div>          
-            </div>
-        </Card>  
+      return ( 
+     <Card title={this.stepOrder(this.state.order.status)} style={this.style} actions={[<a onClick={this.handleEdit}>EDIT</a>, <a>DELETE</a>]}>
+        <div style={{ background: '#ECECEC', padding: '10px' }}>
+          <Row gutter={5}>
+            <Col span={12}>
+              <Card title="Customer" bordered={false}>
+                Card content
+              </Card>
+            </Col>
+            <Col span={12}>
+              <Card title="Business" bordered={false}>
+                Card content
+              </Card>
+         </Col>
+          </Row>
         </div>
+      </Card>
       )
      }
     }
