@@ -15,37 +15,49 @@ class Edit extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      // order: [],
+      order: [],
       isSaving: false,
       isFetching: false,
       error: null,
     };
   };
-  // componentDidMount() {
-  //   const id = this.props.match.params.id;
-  //   this.setState({ isFetching: true, error: null});
-  //   fetchOrderById(id)
-  //     .then(data => {
-  //         console.log(data);         
-  //       this.setState({ order: data});
-   
-  //       console.log(this.state.order.status)
-  //       // this.props.form.setFieldsValue(
-  //       //   // { comments:`${order.status}`},
-  //       //   { status:`${order.status}`},
-  //       //   );
-  //     })
-  //     .catch(error => {
-  //       this.setState({ isFetching: false, error});
-  //     });
-  //     const order=this.state.order;
-  //     this.props.form.setFieldsValue(
-  //       // { comments:`${order.status}`},
-  //       // { status:`${order.status}`},
-  //       { businessObjectId:order.status},
-  //       // { customerObjectId:'accepted'},
-  //       );
-  // };
+  componentDidMount() {
+    const id = this.props.match.params.id;
+    this.setState({ isFetching: true, error: null});
+    fetchOrderById(id)
+      .then(data => {
+          console.log(data);         
+        this.setState({order: data});
+          console.log(this.state.order);
+        // console.log(this.state.order.status) 
+      }).then(res => {   
+        const hh="ew"
+        if (hh!="new") {
+        const order=this.state.order;   
+            this.props.form.setFieldsValue(
+        { status:`${order.status}`,
+          comments:`${order.comments}`,
+          customer:`${order.customer._id}`,
+          business:`${order.business._id}`,
+          category:`${order.category._id}`,
+          jobLocation:`${order.jobLocation}`,
+          grade:`${order.grade}`,
+       }      
+        )}
+      })
+      .catch(error => {
+        this.setState({ isFetching: false, error});
+      });
+      // const {order}=this.state;
+      
+     
+      // this.props.form.setFieldsValue(
+      //   { comments:`${order.status}`},
+      //   // { status:`${order.status}`},
+      //   // { comments:order.status},
+      //   // { customerObjectId:'accepted'},
+      //   );
+  };
   handleSubmit = e => {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
@@ -73,10 +85,7 @@ class Edit extends React.Component {
       wrapperCol: { span: 14 },
     };
     return (
-      <Form {...formItemLayout} onSubmit={this.handleSubmit}>
-        {/* <Form.Item label="Plain Text">
-          <span className="ant-form-text">China</span>
-        </Form.Item> */}
+      <Form {...formItemLayout} onSubmit={this.handleSubmit}> 
         <Form.Item label="Customer Id" hasFeedback>
           {getFieldDecorator('customer', {
             rules: [{ required: true, message: 'Please fill customerObjectId!' }],

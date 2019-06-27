@@ -32,8 +32,7 @@ export function fetchOrderById(id) {
   return axios
     .get(`/orders/${id}`)
     .then(response => {
-        const order=response.data;
-        console.log(order)
+        const order=response.data;      
         return order;
     })
     .catch(error => {

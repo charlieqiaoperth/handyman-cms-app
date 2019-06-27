@@ -16,9 +16,9 @@ export default class Orders extends React.Component {
         this.setState({ isFetching: true, error: null});
         fetchOrderById(id)
           .then(data => {
-              console.log(data);         
+                
             this.setState({ order: data});
-            console.log(this.state.order.customer.customerName)
+          
           })
           .catch(error => {
             this.setState({ isFetching: false, error});
