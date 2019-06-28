@@ -23,6 +23,8 @@ class Edit extends React.Component {
   };
   componentDidMount() {
     const id = this.props.match.params.id;
+    console.log(id);
+    // if (id === "new") {return};
     this.setState({ isFetching: true, error: null});
     fetchOrderById(id)
       .then(data => {
@@ -30,39 +32,30 @@ class Edit extends React.Component {
         this.setState({order: data});
           console.log(this.state.order);
         // console.log(this.state.order.status) 
-      }).then(res => {   
-        const hh="ew"
-        if (hh!="new") {
+      }).then(res => {       
         const order=this.state.order;   
-            this.props.form.setFieldsValue(
-        { status:`${order.status}`,
-          comments:`${order.comments}`,
-          customer:`${order.customer._id}`,
-          business:`${order.business._id}`,
-          category:`${order.category._id}`,
-          jobLocation:`${order.jobLocation}`,
-          grade:`${order.grade}`,
-       }      
-        )}
+        console.log(order);
+        this.props.form.setFieldsValue(
+            { status:`${order.status}`,
+              comments:`${order.comments}`,
+              customer:`${order.customer._id}`,
+              business:`${order.business._id}`,
+              category:`${order.category._id}`,
+              jobLocation:`${order.jobLocation}`,
+              grade:`${order.grade}`,
+           }      
+        )
       })
       .catch(error => {
         this.setState({ isFetching: false, error});
       });
-      // const {order}=this.state;
-      
-     
-      // this.props.form.setFieldsValue(
-      //   { comments:`${order.status}`},
-      //   // { status:`${order.status}`},
-      //   // { comments:order.status},
-      //   // { customerObjectId:'accepted'},
-      //   );
+
   };
   handleSubmit = e => {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        // const name=e.target;
+     
         addNewOrder(values)
         .then(() => {
           this.setState({ isSaving: false });
@@ -71,7 +64,7 @@ class Edit extends React.Component {
         .catch(error => {
           this.setState({ isSaving: false, error });
         });
-        // console.log('Received values of form: ', values);
+      
       }
     });
   };

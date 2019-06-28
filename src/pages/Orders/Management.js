@@ -1,10 +1,10 @@
 // Management.js
 import {fetchOrders, deleteOrder} from '../../api/order';
+import DisplayTable from './DisplayTable';
 
-import { Table, Divider} from 'antd';
-import Link from 'umi/link';
+import { Form, Row, Col, Input, Button, Icon, Select, Slider} from 'antd';
 
-export default class Orders extends React.Component {
+class OrdersManagement extends React.Component {
     constructor(props) {
       super(props);
       this.state = {
@@ -27,80 +27,119 @@ export default class Orders extends React.Component {
     };
     
  
-    columns = [
-        {
-          title: 'ID',
-          dataIndex: '_id',
-          key: 'id',  
-          render: (text, record) => (
-            <span>    
-           
-            <Link
-                to={{
-                    pathname: `/orders/management/${text}`,           
-                }}>{text}
-            </Link>          
-            </span>      
-          ),
-        },
-        {
-          title: 'Status',
-          dataIndex: 'status',
-          key: 'status',
-        },
-        // {
-        //   title: 'Grade',
-        //   dataIndex: 'grade',
-        //   key: 'grade',
-        // }, 
-        // {
-        //     title: 'Comments',
-        //     dataIndex: 'comments',
-        //     key: 'comments',
-        //   },      
-        {
-        title: 'Customer',
-        dataIndex: 'customer.customerName',
-        key: 'customer',
-        },    
-        {
-            title: 'Business',
-            dataIndex: 'business',
-            key: 'business',
-          },  
-        {
-          title: 'Action',
-          dataIndex: '_id',
-          key: 'action',
-          render: (text, record) => (
-            // onClick={(e) => { this.haha(text); }}
-            <span>
-               <Link
-                to={{
-                    pathname: `/orders/management/edit/${text}`,           
-                }}>Edit
-            </Link>
-            <Divider type="vertical" />
-            <a href="#" onClick={(e) => { this.deleteRecord(text);}} >Delete</a>
-          </span>
-          ),
-        },
-      ]; 
-      deleteRecord=(e)=>{      
-        if (window.confirm("Do you want to delete this order ?")) {          
-          deleteOrder(e).then(res => {
-            location.reload() ;
-          }).catch(error => {
-              console.log(error );
-          });
-        }
-      }
+    handleSearch = e => {
+      e.preventDefault();
+      this.props.form.validateFields((err, values) => {
+        if (!err) {console.log('Received values of form: ', values)};
+      });
+    };
+  
+    handleReset = () => {
+      this.props.form.resetFields();
+    };
+    handleAddNewOrder=()=>{
+      const id = this.props.match.params.id;      
+      this.props.history.push({
+        pathname: `/orders/management/edit/new`,
+    })};
+    formGet=()=>{
+      const { getFieldDecorator } = this.props.form;
+      const formItemLayout = {
+        labelCol: { span: 8 },
+        wrapperCol: { span: 16 },
+      };
+      return (
+        <Form  {...formItemLayout} onSubmit={this.handleSearch}>
+        {/* <Row gutter={24}>{this.getFields()}</Row> */}
+        
+        <Button type="primary" onClick={this.handleAddNewOrder}>Add New order</Button>
+        
+        <Row gutter={4}>
+        {/* <Col span={6}>
+        <Form.Item label="Field" hasFeedback>
+          {getFieldDecorator('searchType', {
+            rules: [{ required: true, message: 'select Customer or Business' }],
+          })(
+            <Select placeholder="search type">
+              <Option value="customer">Customer</Option>
+              <Option value="business">Business</Option>
+            </Select>,          
+          )}
+        </Form.Item >
+         </Col> */}
+         <Col span={6}>
+        <Form.Item label="key word" hasFeedback>
+          {getFieldDecorator('key')(
+            <Input placeholder="key word"/>            
+          )}
+        </Form.Item>
+        </Col>
+        {/* </Row>
+        <Row> */}        
+        <Col span={6}>
+        <Form.Item label="By Sort" hasFeedback>
+          {getFieldDecorator('sort')(
+            <Select placeholder="Please select which name">
+              <Option value="status">Order Status</Option>
+              <Option value="createdAt">Creation Time</Option>
+              <Option value="grade">Rate</Option>
+            </Select>        
+          )}
+        </Form.Item>
+        </Col>
+        <Col span={6}>
+        <Form.Item label="Results">
+          {getFieldDecorator('pageSize')(
+            <Slider 
+            min={10}
+            max={50}
+              marks={{
+                10: '10',
+                15: '15',
+                20: '20',
+                30: '30',
+                50:'50' ,            
+              }}
+            />,
+          )}
+        </Form.Item>
+        </Col>
+        </Row>
+        <Row>
+          <Col gutter={2} span={4} style={{ textAlign: 'right' }}>
+            <Button type="primary" htmlType="submit">
+              Search
+            </Button>
+            <Button onClick={this.handleReset}> 
+            {/* //style={{ marginLeft:2}}  */}
+              Clear
+            </Button>
+          </Col>
+        </Row>
+        <div >          
+        <DisplayTable orders={this.state.orders}/>
+        </div>
+      </Form>
+      )
+    }
     render() {
       return (
-   
-        <div><Table columns={this.columns} dataSource={this.state.orders} /></div>
-       
+        // <Form className="ant-advanced-search-form" onSubmit={this.handleSearch}>
+        //   {/* <Row gutter={24}>{this.getFields()}</Row> */}
+        //   <Row>
+        //     <Col span={24} style={{ textAlign: 'right' }}>
+        //       <Button type="primary" htmlType="submit">
+        //         Search
+        //       </Button>
+        //       <Button style={{ marginLeft: 8 }} onClick={this.handleReset}>
+        //         Clear
+        //       </Button>
+        //     </Col>
+        //   </Row>
+        // </Form> 
+        <this.formGet/> 
       );
     }
   }
-  
+  const searchCondition = Form.create({ name: 'advanced_search' })(OrdersManagement);
+  export default searchCondition;
