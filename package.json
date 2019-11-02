@@ -14,7 +14,7 @@
   "devDependencies": {
     "umi": "^2.8.3",
     "umi-plugin-react": "^1.9.1",
-    "axios": "^0.16.2",
+    "axios": "^0.18.1",
     "bootstrap": "^3.3.7",
     "classnames": "^2.2.5",
     "node-sass": "^4.12.0",
